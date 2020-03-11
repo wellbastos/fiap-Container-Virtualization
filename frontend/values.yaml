@@ -1,4 +1,9 @@
-replicaCount: 1
+replicaCount: 2
+
+strategy:
+    maxSurge: 50%
+    maxUnavailable: 0
+    type: RollingUpdate
 
 image:
   repository: wellbastos/fiap-frontend
@@ -27,12 +32,18 @@ securityContext:
 service:
   type: ClusterIP
   port: 8080
+  healthcheck: '/'
+  delaySeconds: 75
+  timeout: 1
+  periodSeconds: 15
 
 ingress:
   enabled: false
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    certmanager.k8s.io/issuer: "letsencrypt"
   hosts:
     - host: app.fiap.com.br
       paths: /
