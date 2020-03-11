@@ -50,7 +50,7 @@ ingress:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
     ingress.kubernetes.io/ssl-redirect: "true"
-    certmanager.k8s.io/issuer: "letsencrypt"
+    # certmanager.k8s.io/issuer: "letsencrypt"
   hosts:
     - host: app.fiap.com.br
       paths: /
