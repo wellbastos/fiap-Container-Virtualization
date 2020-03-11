@@ -6,6 +6,11 @@ metadata:
 {{ include "consumer-php.labels" . | indent 4 }}
 spec:
   replicas: {{ .Values.replicaCount }}
+  strategy:
+    type: {{ .Values.strategy.type }}
+    rollingUpdate:
+      maxSurge: {{ .Values.strategy.maxSurge }}
+      maxUnavailable: {{ .Values.strategy.maxUnavailable }}  
   selector:
     matchLabels:
       app.kubernetes.io/name: {{ include "consumer-php.name" . }}
@@ -27,12 +32,35 @@ spec:
         - name: {{ .Chart.Name }}
           securityContext:
             {{- toYaml .Values.securityContext | nindent 12 }}
+          {{- if .Values.image.digest }}
+          image: {{ .Values.image.repository }}@{{ .Values.image.digest}}
+          {{- else }}
           image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          {{- end }}
           imagePullPolicy: {{ .Values.image.pullPolicy }}
           ports:
             - name: http
               containerPort: 80
               protocol: TCP
+          livenessProbe:
+            httpGet:
+              path: {{ .Values.service.healthcheck }}
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: {{ .Values.service.delaySeconds }}
+            timeoutSeconds: {{ .Values.service.timeout }}
+            periodSeconds: {{ .Values.service.periodSeconds }}
+          readinessProbe:
+            httpGet:
+              path:  {{ .Values.service.healthcheck }}
+              port: {{ .Values.service.port }}
+            initialDelaySeconds: {{ .Values.service.delaySeconds }}
+            timeoutSeconds: {{ .Values.service.timeout }}
+            periodSeconds: {{ .Values.service.periodSeconds }}
+          envFrom:
+          - secretRef:
+              name: {{ .Values.secret.name }}
+          - configMapRef:
+              name: {{ .Values.configMap.name }}
           livenessProbe:
             httpGet:
               path: /

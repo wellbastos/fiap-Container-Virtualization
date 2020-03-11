@@ -1,35 +1,36 @@
-# Default values for fiap-microservice.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
-
 replicaCount: 1
 
+configmap:
+  name: configmap-microservices
+  values:
+
+      ENV: docker
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7000
+
 image:
-  repository: nginx
-  tag: stable
+  repository: wellbastos/fiap-microservices
+  tag: 0.0.1
+  digest: "sha256:59b12f40c51c839867d7fded9c095f40756a5b5d2329926d6cdc8996578f9195"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: ""
+nameOverride: "fiap-microservice"
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: fiap-microservice
 
-podSecurityContext: {}
-  # fsGroup: 2000
+podSecurityContext:
+  fsGroup: 2000
 
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext: 
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -43,23 +44,18 @@ ingress:
   hosts:
     - host: chart-example.local
       paths: []
-
   tls: []
   #  - secretName: chart-example-tls
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 nodeSelector: {}
 

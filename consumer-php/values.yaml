@@ -1,39 +1,61 @@
-# Default values for consumer-php.
-# This is a YAML-formatted file.
-# Declare variables to be passed into your templates.
+replicaCount: 2
 
-replicaCount: 1
+configmap:
+  name: configmap-consumer
+  values:
+    APP_NAME: Consumer
+    APP_ENV: local
+    APP_DEBUG: true
+    AMQP_USERNAME: rabbitmq
+    AMQP_PASSWORD: rabbitmq
+    AMQP_HOST: fiap-rabbit
+    AMQP_PORT: 5672
+    AMQP_VHOST: '/'
+    AMQP_EXCHANGE_NAME: userRegistrations
+    AMQP_EXCHANGE_TYPE: fanout
+
+secret:
+  name:
+  values:
+    APP_KEY: 'and4lvch4HIe73Iw/JEQN6gh3YWCI0nk54rdOnaIKEQ='
+    SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
+
+strategy:
+    maxSurge: 50%
+    maxUnavailable: 0
+    type: RollingUpdate
 
 image:
-  repository: nginx
-  tag: stable
+  repository: wellbastos/consumer-php
+  tag: 0.0.1
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: ""
+nameOverride: "consumer-php"
 fullnameOverride: ""
 
 serviceAccount:
-  # Specifies whether a service account should be created
   create: true
-  # The name of the service account to use.
-  # If not set and create is true, a name is generated using the fullname template
-  name:
+  name: consumer
+ 
+podSecurityContext:
+  fsGroup: 2000
 
-podSecurityContext: {}
-  # fsGroup: 2000
-
-securityContext: {}
-  # capabilities:
-  #   drop:
-  #   - ALL
-  # readOnlyRootFilesystem: true
-  # runAsNonRoot: true
-  # runAsUser: 1000
+securityContext:
+  capabilities:
+    drop:
+    - ALL
+  readOnlyRootFilesystem: true
+  runAsNonRoot: true
+  runAsUser: 1000
 
 service:
   type: ClusterIP
   port: 80
+  healthcheck: /actuator/health
+  delaySeconds: 75
+  timeout: 1
+  periodSeconds: 15
 
 ingress:
   enabled: false
@@ -49,17 +71,13 @@ ingress:
   #    hosts:
   #      - chart-example.local
 
-resources: {}
-  # We usually recommend not to specify default resources and to leave this as a conscious
-  # choice for the user. This also increases chances charts run on environments with little
-  # resources, such as Minikube. If you do want to specify resources, uncomment the following
-  # lines, adjust them as necessary, and remove the curly braces after 'resources:'.
-  # limits:
-  #   cpu: 100m
-  #   memory: 128Mi
-  # requests:
-  #   cpu: 100m
-  #   memory: 128Mi
+resources: 
+  limits:
+    cpu: 100m
+    memory: 128Mi
+  requests:
+    cpu: 100m
+    memory: 128Mi
 
 nodeSelector: {}
 
