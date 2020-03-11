@@ -34,6 +34,13 @@ imagePullSecrets: []
 nameOverride: "consumer-php"
 fullnameOverride: ""
 
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 90
+  targetMemoryUtilizationPercentage: 90
+
 serviceAccount:
   create: true
   name: consumer

@@ -36,6 +36,13 @@ securityContext:
   runAsNonRoot: true
   runAsUser: 1000
 
+autoscaling:
+  enabled: true
+  minReplicas: 2
+  maxReplicas: 10
+  targetCPUUtilizationPercentage: 90
+  targetMemoryUtilizationPercentage: 90
+  
 service:
   type: ClusterIP
   port: 80
