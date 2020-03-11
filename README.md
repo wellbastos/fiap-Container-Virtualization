@@ -53,6 +53,8 @@ kubectl --namespace kube-system patch deploy tiller-deploy -p '{"spec":{"templat
 
 ## Instalando Rabbitmq:
 
+`Executar no terminal:`
+
 ```sh
 helm install -n rabbitmq-ha stable/rabbitmq-ha
 ```
@@ -60,6 +62,8 @@ helm install -n rabbitmq-ha stable/rabbitmq-ha
 ---
 
 ## Instalando Mysql:
+
+`Executar no terminal:`
 
 ```sh
 helm install -n mysql -f mysql/values.yaml mysql/
@@ -69,6 +73,8 @@ helm install -n mysql -f mysql/values.yaml mysql/
 
 ## Instalando Frontend:
 
+`Executar no terminal:`
+
 ```sh
 helm install -n frontend -f frontend/values.yaml frontend/
 ```
@@ -77,6 +83,8 @@ helm install -n frontend -f frontend/values.yaml frontend/
 
 ## Instalando consumer:
 
+`Executar no terminal:`
+
 ```sh
 helm install -n consumer-php -f consumer-php/values.yaml consumer-php/
 ```
@@ -84,6 +92,8 @@ helm install -n consumer-php -f consumer-php/values.yaml consumer-php/
 ---
 
 ## Instalando fiap-microservice:
+
+`Executar no terminal:`
 
 ```sh
 helm install -n fiap-microservice -f fiap-microservice/values.yaml fiap-microservice/
@@ -102,17 +112,18 @@ Adquirindo `EXTERNALIP`:
 `Executar no terminal:`
 
 ```sh
-kubectl get svc -n ops
+kubectl get svc -n ops nginx-ingress-controller | grep -v EXTE |awk '{print $4}'
 ```
 
 ---
 
-### Editando  o hosts
+### Editando o hosts:
 
 Endereço IP que vai estar no campo `EXTERNALIP`, e adiciona-lo dentro do arquivo `/etc/hosts`
 
 `Executar no terminal:`
-editar o seu `hosts`
+
+editando o `hosts`:
 
 ```sh
 vim /etc/hosts
@@ -120,4 +131,15 @@ vim /etc/hosts
 ExterrnalIP app.fiap.com.br
 ```
 
+### Jeito Facil: 
+
+```sh
+export external=$(kubectl get svc -n ops nginx-ingress-controller | grep -v EXTE |awk '{print $4}')
+
+echo $external app.fiap.com.br >> /etc/hosts
+```
+
+**Abrir o navegador e acessar o site `app.fiap.com.br`, e ignorar o erro de ssl.**
+
 ---
+
