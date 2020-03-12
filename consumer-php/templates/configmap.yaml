@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: {{ .Values.configmap.name }}
 data:
-  {{- range $key, $value := .Values.configap.mvalues }}
+  {{- range $key, $value := .Values.configmap.values }}
     {{ $key }}: {{ $value | quote }}
     {{- end }}
