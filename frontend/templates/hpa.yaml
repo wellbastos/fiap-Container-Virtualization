@@ -1,20 +1,18 @@
 {{- if .Values.autoscaling.enabled }}
-{{- $fullName := include "frontend.fullname" . -}}
 apiVersion: autoscaling/v2beta1
 kind: HorizontalPodAutoscaler
 metadata:
   labels:
-    app: {{ include "frontend.name" . }}
-    chart: {{ include "frontend.chart" . }}
+    app: {{ template "frontend.name" . }}
+    chart: {{ template "frontend.chart" . }}
+    component: {{ template "frontend.name" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ $fullName }}
-  labels:
+  name: {{ template "frontend.fullname" . }}
 spec:
   scaleTargetRef:
-    apiVersion: {{ template "deployment.apiVersion" . }}
     kind: Deployment
-    name: {{ template $fullname-hpa . }}
+    name: {{ template "frontend.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

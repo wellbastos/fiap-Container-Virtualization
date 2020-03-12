@@ -12,7 +12,6 @@ metadata:
   labels:
 spec:
   scaleTargetRef:
-    apiVersion: {{ template "deployment.apiVersion" . }}
     kind: Deployment
     name: {{ template $fullname-hpa . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}

@@ -6,7 +6,7 @@ strategy:
     type: RollingUpdate
 
 image:
-  repository: wellbastos/fiap-frontend
+  repository: wellbastos/frontend
   tag: 0.0.1
   pullPolicy: IfNotPresent
 
