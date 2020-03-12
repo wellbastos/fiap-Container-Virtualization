@@ -15,10 +15,10 @@ configmap:
     AMQP_EXCHANGE_TYPE: fanout
 
 secret:
-  name:
-  values:
-    APP_KEY: and4lvch4HIe73Iw/JEQN6gh3YWCI0nk54rdOnaIKEQ=
-    SLACK_WEBHOOK_URL: https://hooks.slack.com/services/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
+  name: consumer
+  values: 
+    APP_KEY: 'and4lvch4HIe73Iw/JEQN6gh3YWCI0nk54rdOnaIKEQ='
+    SLACK_WEBHOOK_URL: 'https://hooks.slack.com/services/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'
 
 strategy:
     maxSurge: 50%
