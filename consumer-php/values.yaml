@@ -45,16 +45,16 @@ serviceAccount:
   create: true
   name: consumer
  
-podSecurityContext:
-  fsGroup: 2000
+# podSecurityContext:
+#   fsGroup: 2000
 
-securityContext:
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
+# securityContext:
+#   capabilities:
+#     drop:
+#     - ALL
+#   readOnlyRootFilesystem: true
+#   runAsNonRoot: true
+#   runAsUser: 1000
 
 service:
   type: ClusterIP
@@ -80,8 +80,8 @@ ingress:
 
 resources: 
   limits:
-    cpu: 1
-    memory: 1Gi
+    cpu: 500
+    memory: 512Mi
   requests:
     cpu: 400m
     memory: 256Mi
