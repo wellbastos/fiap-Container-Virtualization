@@ -8,12 +8,12 @@ metadata:
     chart: {{ include "consumer-php.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ $fullName }}
+  name: {{ template "consumer-php.fullname" . }}
   labels:
 spec:
   scaleTargetRef:
     kind: Deployment
-    name: {{ template $fullname-hpa . }}
+    name: {{ template "consumer-php.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:

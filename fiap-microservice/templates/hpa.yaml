@@ -8,12 +8,12 @@ metadata:
     chart: {{ include "fiap-microservice.chart" . }}
     heritage: {{ .Release.Service }}
     release: {{ .Release.Name }}
-  name: {{ $fullName }}
+  name: {{ template "fiap-microservice.fullname" . }}
   labels:
 spec:
   scaleTargetRef:
     kind: Deployment
-    name: {{ template $fullname-hpa . }}
+    name: {{ template "fiap-microservice.fullname" . }}
   minReplicas: {{ .Values.autoscaling.minReplicas }}
   maxReplicas: {{ .Values.autoscaling.maxReplicas }}
   metrics:
