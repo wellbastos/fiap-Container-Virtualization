@@ -14,7 +14,7 @@ strategy:
 image:
   repository: wellbastos/fiap-microservices
   tag: 0.0.1
-  digest: "sha256:59b12f40c51c839867d7fded9c095f40756a5b5d2329926d6cdc8996578f9195"
+  # digest: "sha256:59b12f40c51c839867d7fded9c095f40756a5b5d2329926d6cdc8996578f9195"
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
@@ -25,16 +25,16 @@ serviceAccount:
   create: true
   name: fiap-microservice
 
-podSecurityContext:
-  fsGroup: 2000
+# podSecurityContext:
+#   fsGroup: 2000
 
-securityContext: 
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
+# securityContext: 
+#   capabilities:
+#     drop:
+#     - ALL
+#   readOnlyRootFilesystem: true
+#   runAsNonRoot: true
+#   runAsUser: 1000
 
 autoscaling:
   enabled: true
@@ -66,8 +66,8 @@ ingress:
 
 resources: 
   limits:
-    cpu: 1
-    memory: 1Gi
+    cpu: 500m
+    memory: 768Mi
   requests:
     cpu: 500m
     memory: 512Mi

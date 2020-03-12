@@ -58,7 +58,7 @@ spec:
             periodSeconds: {{ .Values.service.periodSeconds }}
           envFrom:
           - configMapRef:
-              name: {{ .Values.configMap.name }}
+              name: {{ .Values.configmap.name }}
           resources:
             {{- toYaml .Values.resources | nindent 12 }}
       {{- with .Values.nodeSelector }}

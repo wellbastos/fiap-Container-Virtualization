@@ -59,10 +59,10 @@ serviceAccount:
 service:
   type: ClusterIP
   port: 80
-  healthcheck: /health
-  delaySeconds: 75
-  timeout: 1
-  periodSeconds: 15
+  # healthcheck: /health
+  # delaySeconds: 75
+  # timeout: 1
+  # periodSeconds: 15
 
 ingress:
   enabled: false
