@@ -141,7 +141,7 @@ export external=$(kubectl get svc -n ops nginx-ingress-controller | grep -v EXTE
 echo $external app.fiap.com.br >> /etc/hosts
 ```
 
-**Abrir o navegador e acessar o site `app.fiap.com.br`, e ignorar o erro de ssl.**
+**Abrir o navegador e acessar o site [app.fiap.com.br](http://app.fiap.com.br), e ignorar o erro de ssl.**
 
 ---
 
