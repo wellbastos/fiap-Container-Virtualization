@@ -1,7 +1,7 @@
 replicaCount: 2
 
 configmap:
-  name: configmap-consumer
+  name: consumer
   values:
     APP_NAME: Consumer
     APP_ENV: local
