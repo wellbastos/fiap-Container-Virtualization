@@ -1,0 +1,117 @@
+version: '3.6'
+
+services:
+
+#---
+# DB mysql
+  fiap-db:
+    image: mysql:5.7
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    volumes:
+    - db-data:/var/lib/mysql/
+    environment:
+      MYSQL_ROOT_PASSWORD: 123456
+      MYSQL_USER: microservices
+      MYSQL_PASSWORD: 123456
+      MYSQL_DATABASE: microservices
+    ports:
+    - "3306:3306"
+    networks:
+    - fiap-microservices
+
+#---
+# java producer api
+  fiap-microservices:
+    image: wellbastos/fiap-microservices:latest
+    depends_on:
+      - db
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    ports:
+    - "8080:8080"
+    - "7001:7000"
+    environment:
+      PORT: 8080
+      ENV: docker
+      JAVA_OPTS: -agentlib:jdwp=transport=dt_socket,server=y,suspend=n,address=*:7000
+    networks:
+      - fiap-microservices
+      # - webapp
+
+#---
+# Messageria RabbitMQ
+  rabbitmq:
+    image: rabbitmq:3-management
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    environment:
+      - RABBITMQ_DEFAULT_USER=rabbitmq
+      - RABBITMQ_DEFAULT_PASS=rabbitmq
+      - RABBITMQ_DEFAULT_VHOST=/
+    ports:
+    - "15672:15672"
+    - "5672:5672"
+    - "25676:25676"
+    networks:
+    - fiap-microservices
+
+#----
+# Consumer PHP
+  consumer-php-app:
+    image: wellbastos/consumer-php:0.0.1
+    deploy:
+      replicas: 1
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3    
+    working_dir: /var/www
+    environment:
+      - APP_NAME=Consumer
+      - APP_ENV=local
+      - APP_KEY=base64:and4lvch4HIe73Iw/JEQN6gh3YWCI0nk54rdOnaIKEQ=
+      - APP_DEBUG=true
+      - AMQP_USERNAME=rabbitmq
+      - AMQP_PASSWORD=rabbitmq
+      - AMQP_HOST=fiap-rabbit
+      - AMQP_PORT=5672
+      - AMQP_VHOST=/
+      - AMQP_EXCHANGE_NAME=userRegistrations
+      - AMQP_EXCHANGE_TYPE=fanout
+      - SLACK_WEBHOOK_URL=https://hooks.slack.com/services/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
+    command: bash -c "composer install && php artisan rabbitmq:consume"
+    depends_on:
+      - "rabbitmq"
+    networks:
+      - fiap-microservices
+
+#---
+# Frontend
+  frontend:
+    image: wellbastos/frontend:0.0.2
+    deploy:
+      replicas: 2
+      restart_policy:
+        condition: on-failure
+        max_attempts: 3
+    working_dir: /app
+    ports:
+      - 80:8080
+    networks:
+      - fiap-microservices
+      # - webapp
+volumes:
+  db-data:
+
+networks:
+  fiap-microservices:
+  # webapp:
