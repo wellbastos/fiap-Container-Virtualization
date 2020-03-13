@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 
 strategy:
     maxSurge: 50%
@@ -7,27 +7,27 @@ strategy:
 
 image:
   repository: wellbastos/frontend
-  tag: 0.0.1
+  tag: latest
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: "webapp"
+nameOverride: ""
 fullnameOverride: ""
 
 serviceAccount:
   create: true
   name: frontend
 
-podSecurityContext: 
-  fsGroup: 2000
+# podSecurityContext: 
+#   fsGroup: 2000
 
-securityContext: 
-  capabilities:
-    drop:
-    - ALL
-  readOnlyRootFilesystem: true
-  runAsNonRoot: true
-  runAsUser: 1000
+# securityContext: 
+#   capabilities:
+#     drop:
+#     - ALL
+#   readOnlyRootFilesystem: true
+#   runAsNonRoot: true
+#   runAsUser: 1000
 
 autoscaling:
   enabled: true
@@ -40,12 +40,12 @@ service:
   type: ClusterIP
   port: 8080
   healthcheck: '/'
-  delaySeconds: 75
+  delaySeconds: 30
   timeout: 1
   periodSeconds: 15
 
 ingress:
-  enabled: false
+  enabled: true
   annotations:
     kubernetes.io/ingress.class: nginx
     kubernetes.io/tls-acme: "true"
@@ -53,19 +53,20 @@ ingress:
     # certmanager.k8s.io/issuer: "letsencrypt"
   hosts:
     - host: app.fiap.com.br
-      paths: /
-  tls: 
-   - secretName: tls-webapp-fiap-com-br
-     hosts:
-       - app.fiap.com.br
+      paths: 
+        - '/'      
+  tls: []
+  #  - secretName: tls-webapp-fiap-com-br
+  #    hosts:
+  #      - app.fiap.com.br
 
 resources: 
   limits:
     cpu: 100m
     memory: 128Mi
   requests:
-    cpu: 100m
-    memory: 128Mi
+    cpu: 10m
+    memory: 32Mi
 
 nodeSelector: {}
 
