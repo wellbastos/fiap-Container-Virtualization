@@ -152,8 +152,11 @@ echo $external api.fiap.com.br >> /etc/hosts
 ---
 ### **Demonstrativo da aplicação:**
 
+![Alt Text](images/testeapp1.gif)
 
 ---
+
+### **Grupo:**
 
 Este Trabalho foi desenvolvido para à matéria de **Container e Virtualization** do **MBA - Fullstack developer, Microservices, Cloud e IOT**
 
