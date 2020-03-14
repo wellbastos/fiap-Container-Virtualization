@@ -150,7 +150,7 @@ echo $external api.fiap.com.br >> /etc/hosts
 
 Este Trabalho foi desenvolvido para à matéria de **Container e Virtualization** do **MBA - Fullstack developer, Microservices, Cloud e IOT**
 
-Pelos alunos:
+`Pelos alunos:`
 
 | Nome | RM|
 |-------|:---:|
