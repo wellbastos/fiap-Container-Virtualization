@@ -131,6 +131,7 @@ editando o `hosts`:
 vim /etc/hosts
 
 ExterrnalIP app.fiap.com.br
+ExterrnalIP api.fiap.com.br
 ```
 
 ### **Jeito Facil:**
@@ -139,9 +140,23 @@ ExterrnalIP app.fiap.com.br
 export external=$(kubectl get svc -n ops nginx-ingress-controller | grep -v EXTE |awk '{print $4}')
 
 echo $external app.fiap.com.br >> /etc/hosts
+echo $external api.fiap.com.br >> /etc/hosts
 ```
 
 **Abrir o navegador e acessar o site [app.fiap.com.br](http://app.fiap.com.br), e ignorar o erro de ssl.**
 
+**[Endereço da API](http://api.fiap.com.br/api/person/v1/)**
 ---
 
+Este Trabalho foi desenvolvido para à matéria de **Container e Virtualization** do **MBA - Fullstack developer, Microservices, Cloud e IOT**
+
+Pelos alunos:
+
+| Nome | RM|
+|-------|:---:|
+|**Flávio Alves Ferreira da Silva** |`RM: 333565`|
+|**Milton Luiz Ribeiro Junior** |`RM: 333949`|
+|**Pedro Madi Della Coletta** |`RM: 334109`|
+|**Rafael Miranda de Almeida** |`RM: 333829`|
+|**Rodrigo de Almeida Pereira** |`RM: 333241`|
+|**Wellington Moreira Bastos** |`RM: 333878`|
