@@ -42,20 +42,20 @@ spec:
             - name: http
               containerPort: {{ .Values.service.port }}
               protocol: TCP
-          livenessProbe:
-            httpGet:
-              path: {{ .Values.service.healthcheck }}
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: {{ .Values.service.delaySeconds }}
-            timeoutSeconds: {{ .Values.service.timeout }}
-            periodSeconds: {{ .Values.service.periodSeconds }}
-          readinessProbe:
-            httpGet:
-              path:  {{ .Values.service.healthcheck }}
-              port: {{ .Values.service.port }}
-            initialDelaySeconds: {{ .Values.service.delaySeconds }}
-            timeoutSeconds: {{ .Values.service.timeout }}
-            periodSeconds: {{ .Values.service.periodSeconds }}
+          # livenessProbe:
+          #   httpGet:
+          #     path: {{ .Values.service.healthcheck }}
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: {{ .Values.service.delaySeconds }}
+          #   timeoutSeconds: {{ .Values.service.timeout }}
+          #   periodSeconds: {{ .Values.service.periodSeconds }}
+          # readinessProbe:
+          #   httpGet:
+          #     path:  {{ .Values.service.healthcheck }}
+          #     port: {{ .Values.service.port }}
+          #   initialDelaySeconds: {{ .Values.service.delaySeconds }}
+          #   timeoutSeconds: {{ .Values.service.timeout }}
+          #   periodSeconds: {{ .Values.service.periodSeconds }}
           envFrom:
           - secretRef:
               name: {{ .Values.secret.name }}

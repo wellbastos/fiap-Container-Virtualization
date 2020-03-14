@@ -1,4 +1,4 @@
-replicaCount: 2
+replicaCount: 1
 
 configmap:
   name: consumer
@@ -6,9 +6,9 @@ configmap:
     APP_NAME: Consumer
     APP_ENV: local
     APP_DEBUG: true
-    AMQP_USERNAME: rabbitmq
-    AMQP_PASSWORD: rabbitmq
-    AMQP_HOST: fiap-rabbit
+    AMQP_USERNAME: administrator
+    AMQP_PASSWORD: 3WFFqdde4ftF%
+    AMQP_HOST: rabbitmq-ha
     AMQP_PORT: 5672
     AMQP_VHOST: '/'
     AMQP_EXCHANGE_NAME: userRegistrations
@@ -31,7 +31,7 @@ image:
   pullPolicy: IfNotPresent
 
 imagePullSecrets: []
-nameOverride: "consumer-php"
+nameOverride: ""
 fullnameOverride: ""
 
 autoscaling:
@@ -58,7 +58,7 @@ serviceAccount:
 
 service:
   type: ClusterIP
-  port: 80
+  port: 9000
   # healthcheck: /health
   # delaySeconds: 75
   # timeout: 1
@@ -67,7 +67,7 @@ service:
 ingress:
   enabled: false
   annotations: {}
-    # kubernetes.io/ingress.class: nginx
+    # kubernetes.io/ingress.cl  ass: nginx
     # kubernetes.io/tls-acme: "true"
   hosts:
     - host: chart-example.local
