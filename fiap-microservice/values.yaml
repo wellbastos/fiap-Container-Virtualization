@@ -52,17 +52,21 @@ service:
   periodSeconds: 15
 
 ingress:
-  enabled: false
-  annotations: {}
-    # kubernetes.io/ingress.class: nginx
-    # kubernetes.io/tls-acme: "true"
+  enabled: true
+  annotations:
+    kubernetes.io/ingress.class: nginx
+    kubernetes.io/tls-acme: "true"
+    ingress.kubernetes.io/ssl-redirect: "true"
+    # certmanager.k8s.io/issuer: "letsencrypt"
   hosts:
-    - host: chart-example.local
-      paths: []
+    - host: api.fiap.com.br
+      paths: 
+        - '/'      
   tls: []
-  #  - secretName: chart-example-tls
+  #  - secretName: tls-api-fiap-com-br
   #    hosts:
-  #      - chart-example.local
+  #      - api.fiap.com.br
+
 
 resources: 
   limits:

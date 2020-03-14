@@ -7,8 +7,9 @@ strategy:
 
 image:
   repository: wellbastos/frontend
-  tag: latest
+  tag: 0.0.7
   pullPolicy: IfNotPresent
+
 
 imagePullSecrets: []
 nameOverride: ""
