@@ -19,13 +19,13 @@ testFramework:
 ## Specify password for root user
 ##
 ## Default: random 10 character string
-mysqlRootPassword: MTIzNDU2Cg==
+mysqlRootPassword: abcd123456
 
 ## Create a database user
 ##
 mysqlUser: microservices
 ## Default: random 10 character string
-mysqlPassword: MTIzNDU2Cg==
+mysqlPassword: abcd123456
 
 ## Allow unauthenticated access, uncomment to enable
 ##
